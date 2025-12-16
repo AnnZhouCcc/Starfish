@@ -42,6 +42,7 @@ Figure 14, Figure 15, `experiments/nsdi26fall/eval_main/unv1/`, `detailed_ae/mai
 
 1. Generate traffic files:
 ```bash
+cd detailed_ae/main/unv/
 mkdir cmfiles
 python3 generate_trafficfiles.py
 ```
@@ -63,7 +64,33 @@ python3 plot.py
 ```
 
 
-prv/
+#### ENP
+
+Figure 14, Figure 15, `experiments/nsdi26fall/eval_main/prv1/`, `detailed_ae/main/enp/`
+
+1. Generate traffic files:
+```bash
+cd detailed_ae/main/enp/
+mkdir cmfiles
+python3 generate_trafficfiles.py
+```
+
+2. Untar path weight files: `tar -xvJf pwfilesdir.tar.xz`
+
+3. Run experiments (this takes about 40 minutes to complete on a 100-core machine, can skip):
+```bash
+mkdir outfiles
+python3 pararun.py --conf enp/run.conf --worker 100
+```
+
+4. Plot
+If skipped the previous step of running experiments: `cp expected_fct_summary.fxt fct_summary.fxt`
+Or (this command `parse.py` would take a few minutes to finish):
+```bash
+python3 parse.py
+python3 plot.py
+```
+
 
 clustera/
 

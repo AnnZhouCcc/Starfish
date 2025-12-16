@@ -3,7 +3,6 @@ import os
 seed_list = [1,2,3,4,5]
 scheme_list = ["dringsu2","dringsu2e","leafspine","rrgsu2","df2augalg","dringecmp","dringwcmpecmp","dringfatpaths","dringfhi","dringracke1four"]
 load_list = range(1,11)
-i = "unv"
 sumfile = "fct_summary.txt"
 with open(sumfile,'a') as fw:
     for j in scheme_list:
