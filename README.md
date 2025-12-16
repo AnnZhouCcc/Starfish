@@ -105,7 +105,7 @@ python3 generate_trafficfiles.py
 
 2. Untar path weight files: `./restore_pwfiles.sh`
 
-3. Run experiments (7G-332G 9:57am- please be cautious about running this experiment with many cores. memories may explode. this takes about 40 minutes to complete on a 100-core machine, can skip):
+3. Run experiments (7G-338G 9:57am-4:46pm please be cautious about running this experiment with many cores. memories may explode. this takes about 40 minutes to complete on a 100-core machine, can skip):
 ```bash
 mkdir outfiles
 python3 pararun.py --conf db/run.conf --worker 30
@@ -185,3 +185,33 @@ or if not run before:
 tar -xvJf outfilesdir.tar.xz
 python3 plot2.py
 ```
+
+
+### Failure
+
+#### UNV
+
+Figure 16, `experiments/nsdi26fall/eval_failure_link/unv1/`, `detailed_ae/failure/unv/`
+
+1. Do not generate new traffic files; reuse the ones in Main
+2. Untar path weight files:
+```bash
+cd detailed_ae/failure/unv
+tar -xvJf pwfilesdir.tar.xz
+```
+3. Run experiments
+dringsu2, dringsu2after, leafspine
+3:55pm-4:00pm
+```bash
+mkdir outfiles
+python3 pararun.py --conf unv/run.conf --worker 50
+```
+4. Parse & plot
+either `cp expected_fct_summary.txt fct_summary.txt`
+or
+```bash
+python3 parse.py
+python3 plot.py
+```
+
+#### ENP
