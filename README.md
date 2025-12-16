@@ -196,7 +196,7 @@ Figure 16, `experiments/nsdi26fall/eval_failure_link/unv1/`, `detailed_ae/failur
 1. Do not generate new traffic files; reuse the ones in Main
 2. Untar path weight files:
 ```bash
-cd detailed_ae/failure/unv
+cd detailed_ae/failure/unv/
 tar -xvJf pwfilesdir.tar.xz
 ```
 3. Run experiments
@@ -214,4 +214,29 @@ python3 parse.py
 python3 plot.py
 ```
 
+
 #### ENP
+
+Figure 16, `experiments/nsdi26fall/eval_failure_link/prv1/`, `detailed_ae/failure/enp/`
+
+1. Do not generate new traffic files; reuse the ones in Main
+2. Untar path weight files:
+```bash
+cd detailed_ae/failure/enp/
+tar -xvJf pwfilesdir.tar.xz
+```
+3. Run experiments
+dringsu2, dringsu2after, leafspine
+4:58pm-5:02pm
+The occasional assertion failed should be fine; they are associated with the loggers
+```bash
+mkdir outfiles
+python3 pararun.py --conf enp/run.conf --worker 100
+```
+4. Parse & plot
+either `cp expected_fct_summary.txt fct_summary.txt`
+or
+```bash
+python3 parse.py
+python3 plot.py
+```
