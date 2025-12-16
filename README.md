@@ -92,8 +92,96 @@ python3 plot.py
 ```
 
 
-clustera/
+#### DB
 
-clusterb/
+Figure 14, Figure 15, `experiments/nsdi26fall/eval_main/cluster_a/`, `detailed_ae/main/db/`
 
-clusterc/
+1. Generate traffic files:
+```bash
+cd detailed_ae/main/db/
+mkdir cmfiles
+python3 generate_trafficfiles.py
+```
+
+2. Untar path weight files: `./restore_pwfiles.sh`
+
+3. Run experiments (7G-323G 9:57am- please be cautious about running this experiment with many cores. memories may explode. this takes about 40 minutes to complete on a 100-core machine, can skip):
+```bash
+mkdir outfiles
+python3 pararun.py --conf db/run.conf --worker 30
+```
+
+4. Plot
+If skipped the previous step of running experiments: `cp expected_fct_summary.fxt fct_summary.fxt`
+Or (this command `parse.py` would take a few minutes to finish):
+```bash
+python3 parse.py
+python3 plot.py
+```
+
+
+#### WS
+
+Figure 14, Figure 15, `experiments/nsdi26fall/eval_main/cluster_b/`, `detailed_ae/main/ws/`
+
+1. Generate traffic files:
+```bash
+cd detailed_ae/main/ws/
+mkdir cmfiles
+python3 generate_trafficfiles.py
+```
+
+2. Untar path weight files: `./restore_pwfiles.sh`
+
+3. Run experiments (?G- ?am- please be cautious about running this experiment with many cores. memories may explode. this takes about 40 minutes to complete on a 100-core machine, can skip):
+```bash
+mkdir outfiles
+python3 pararun.py --conf ws/run.conf --worker 30
+```
+
+4. Plot
+If skipped the previous step of running experiments: `cp expected_fct_summary.fxt fct_summary.fxt`
+Or (this command `parse.py` would take a few minutes to finish):
+```bash
+python3 parse.py
+python3 plot.py
+```
+
+
+#### HD
+
+Figure 14, Figure 15, `experiments/nsdi26fall/eval_main/cluster_c/`, `detailed_ae/main/hd/`
+
+1. Generate traffic files:
+```bash
+cd detailed_ae/main/hd/
+mkdir cmfiles
+python3 generate_trafficfiles.py
+```
+
+2. Untar path weight files: `./restore_pwfiles.sh`
+
+3. Run experiments (?G- ?am- please be cautious about running this experiment with many cores. memories may explode. this takes about 40 minutes to complete on a 100-core machine, can skip):
+```bash
+mkdir outfiles
+python3 pararun.py --conf hd/run.conf --worker 30
+```
+
+4. Plot
+If skipped the previous step of running experiments: `cp expected_fct_summary.fxt fct_summary.fxt`
+Or (this command `parse.py` would take a few minutes to finish):
+```bash
+python3 parse.py
+python3 plot.py
+```
+
+
+### CDF
+
+We make use of the data generated in the Main section. do not generate new data here.
+
+#### UNV
+
+
+
+#### ENP
