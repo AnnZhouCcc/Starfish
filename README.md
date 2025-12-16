@@ -49,7 +49,7 @@ python3 generate_trafficfiles.py
 
 2. Untar path weight files: `tar -xvJf pwfilesdir.tar.xz`
 
-3. Run experiments (this takes about 45 minutes to complete on a 100-core machine, can skip):
+3. Run experiments (this takes about 45 minutes to complete on a 100-core machine, can skip; best if run, cdf uses raw data):
 ```bash
 mkdir outfiles
 python3 pararun.py --conf unv/run.conf --worker 100
@@ -77,7 +77,7 @@ python3 generate_trafficfiles.py
 
 2. Untar path weight files: `tar -xvJf pwfilesdir.tar.xz`
 
-3. Run experiments (this takes about 40 minutes to complete on a 100-core machine, can skip):
+3. Run experiments (this takes about 40 minutes to complete on a 100-core machine, can skip; best if run, cdf uses raw data):
 ```bash
 mkdir outfiles
 python3 pararun.py --conf enp/run.conf --worker 100
@@ -105,7 +105,7 @@ python3 generate_trafficfiles.py
 
 2. Untar path weight files: `./restore_pwfiles.sh`
 
-3. Run experiments (7G-323G 9:57am- please be cautious about running this experiment with many cores. memories may explode. this takes about 40 minutes to complete on a 100-core machine, can skip):
+3. Run experiments (7G-332G 9:57am- please be cautious about running this experiment with many cores. memories may explode. this takes about 40 minutes to complete on a 100-core machine, can skip):
 ```bash
 mkdir outfiles
 python3 pararun.py --conf db/run.conf --worker 30
@@ -179,9 +179,9 @@ python3 plot.py
 ### CDF
 
 We make use of the data generated in the Main section. do not generate new data here.
-
-#### UNV
-
-
-
-#### ENP
+`python3 plot.py`
+or if not run before:
+```bash
+tar -xvJf outfilesdir.tar.xz
+python3 plot2.py
+```
