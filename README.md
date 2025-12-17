@@ -240,3 +240,40 @@ or
 python3 parse.py
 python3 plot.py
 ```
+
+
+### Scale
+
+Figure 17a, `experiments/nsdi26fall/eval_scale_larger_supernode/`, `detailed_ae/scale/`, constant ring size
+Figure 17b, `experiments/nsdi26fall/eval_scale_larger_ring/`, `detailed_ae/scale/`, constant supernode size
+
+1. Generate traffic files (needed here because topology size is changing)
+```bash
+cd detailed_ae/scale/
+mkdir cmfiles
+python3 generate_trafficfiles.py
+```
+2. Untar path weight files: `tar -xvJf pwfilesdir.tar.xz`
+3. Run experiments
+8 minutes
+```bash
+mkdir outfiles
+python3 pararun.py --conf run.conf --worker 100
+```
+4. Parse & plot
+`cp expected_fct_summary.txt fct_summary.txt`
+or
+`python3 parse.py`
+`python3 plot.py`
+
+
+
+1. Generate traffic files
+
+2. Untar path weight files
+
+3. Run experiments
+
+4. Parse & plot
+
+

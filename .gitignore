@@ -2,7 +2,12 @@ detailed_ae/*/*/cmfiles/
 detailed_ae/*/*/outfiles/
 detailed_ae/*/*/pwfiles/
 detailed_ae/evalnetpathfiles/netpath_dring_80_64_fhi.np
+detailed_ae/*/cmfiles/
 detailed_ae/*/outfiles/
+detailed_ae/*/pwfiles/
+detailed_ae/*/logout.dat
+detailed_ae/evalscalenetpathfiles/netpath_dring_140_96_su2.np
+detailed_ae/evalscalenetpathfiles/netpath_dring_160_96_su2.np
 
 .vscode/
 venv/
