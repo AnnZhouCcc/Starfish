@@ -8,6 +8,7 @@ We are submitting this artifact for all three badges: Artifact Available, Artifa
 ## Getting Started Instructions
 
 Make the executables:
+set `BASEDIR` in datacentre Makefile
 ```bash
 cd src/emp/ && make clean && make
 cd datacentre/ && make clean && make

@@ -1,0 +1,5 @@
+*.o
+htsim
+libhtsim.a
+datacentre/fct_results*/
+datacentre/computestore
