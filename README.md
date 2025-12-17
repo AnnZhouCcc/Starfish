@@ -249,6 +249,8 @@ Figure 17b, `experiments/nsdi26fall/eval_scale_larger_ring/`, `detailed_ae/scale
 
 1. Generate traffic files (needed here because topology size is changing)
 ```bash
+cd detailed_ae/evalscalenetpathfiles/
+tar -xvJf twolargedringnetpath.tar.xz
 cd detailed_ae/scale/
 mkdir cmfiles
 python3 generate_trafficfiles.py
@@ -267,13 +269,21 @@ or
 `python3 plot.py`
 
 
+### Bottleneck
 
-1. Generate traffic files
+Figure 18, `experiments/nsdi26fall/eval_bottleneck_oversub/`, `detailed_ae/bottleneck/`
 
-2. Untar path weight files
+1. Generate traffic files: we do not generate new traffic files
 
-3. Run experiments
+2. Untar path weight files: we do not untar new path weight files
 
+3. Run experiments (~31 minutes)
+```bash
+mkdir outfiles
+python3 pararun.py --conf run.conf --worker 100
+```
 4. Parse & plot
-
-
+`cp expected_fct_summary.txt fct_summary.txt`
+or
+`python3 parse.py`
+`python3 plot.py`
