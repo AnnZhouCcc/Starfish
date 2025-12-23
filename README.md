@@ -31,27 +31,28 @@ python3 pararun.py --conf run.conf --worker 1
 
 We provide instructions for the five major experiments that showcase the key results and major claims of our work. The table below summarizes the five experiments -- which figures they refer to, which directories contain the codes and which subsections describe the experiment details.
 
-| Figure     | Directory   | Subsection                |
-| ---------- | ----------- | ------------------------- |
-| Figures 14 | main/       | [Main](#main)             |
-| Figure 15  | cdf/        | [CDF](#cdf)               |
-| Figure 16  | failure/    | [Failure](#failure)       |
-| Figure 17  | scale/      | [Scale](#scale)           |
-| Figures 18 | bottleneck/ | [Bottleneck](#bottleneck) |
+| Figure    | Directory   | Subsection                |
+| --------- | ----------- | ------------------------- |
+| Figure 14 | main/       | [Main](#main)             |
+| Figure 15 | cdf/        | [CDF](#cdf)               |
+| Figure 16 | failure/    | [Failure](#failure)       |
+| Figure 17 | scale/      | [Scale](#scale)           |
+| Figure 18 | bottleneck/ | [Bottleneck](#bottleneck) |
 
 Setting up:
 1. Make sure that you have completed all steps in [Getting Started Instructions](#getting-started-instructions).
 2. Run the following commands to prepare the files that will be used later:
 ```bash
+# Prepare netpath file for DRing FHI
 cd detailed_ae/evalnetpathfiles/
 tar -xvJf netpath_fhi_dring.tar.xz
 mv netpath_fhi_dring.txt netpath_dring_80_64_fhi.np
-
+# Prepare raw traffic files
 cd ../
 tar -xvJf rawtrafficfiles.tar.xz
 ```
 
-Quick run: In some cases, one run of the experiment runs for a couple hours and takes up 10+GB of memory, and one experiment could contain up to 500 runs with different configurations. A single run of the experiment can only be run on one core and parallism only happens across multiple runs. As such, we will also provide `Quick Run` option for some experiments, where it runs a shorter version of the experiments to make sure experiments are functional and continues the figure plotting with data files provided to make sure results are correct.
+Quick run: In some cases, one run of the experiment runs for 7+ hours and takes up 10+ GB of memory, and one experiment could contain up to 500 runs with different configurations. A single run of the experiment can only be run on one core and parallism only happens across multiple runs. As such, we will also provide `Quick Run` option for some experiments, where it runs a shorter version of the experiments to make sure experiments are functional and continues the figure plotting with data files provided to make sure results are correct.
 
 
 ### Main
@@ -80,7 +81,7 @@ mkdir outfiles
 4. Run experiments and parse outputs:
 
 **Full Run**
-> **Caution:** It takes ~45 minutes to finish all experiments with 100 cores.
+> **Caution:** It takes 45+ minutes to finish all experiments with 100 cores.
 ```bash
 cd ../
 python3 pararun.py --conf unv/run.conf --worker 100
@@ -94,7 +95,7 @@ python3 pararun.py --conf unv/quickrun.conf --worker 100
 cd unv/
 cp expected_fct_summary.fxt fct_summary.fxt
 ```
-4. Plot:
+5. Plot:
 ```bash
 python3 plot.py
 ```
@@ -103,35 +104,45 @@ You should expect to see `fig14_unv.pdf`, which should match the first subfigure
 
 #### ENP
 
-Figure 14, Figure 15, `experiments/nsdi26fall/eval_main/prv1/`, `detailed_ae/main/enp/`
-
 1. Generate traffic files:
 ```bash
 cd detailed_ae/main/enp/
 mkdir cmfiles
 python3 generate_trafficfiles.py
 ```
-
-2. Untar path weight files: `tar -xvJf pwfilesdir.tar.xz`
-
-3. Run experiments (this takes about 40 minutes to complete on a 100-core machine, can skip; best if run, cdf uses raw data):
+2. Untar path weight files: 
+```bash
+tar -xvJf pwfilesdir.tar.xz
+```
+3. Create a directory for output files:
 ```bash
 mkdir outfiles
-python3 pararun.py --conf enp/run.conf --worker 100
 ```
+4. Run experiments and parse outputs:
 
-4. Plot
-If skipped the previous step of running experiments: `cp expected_fct_summary.fxt fct_summary.fxt`
-Or (this command `parse.py` would take a few minutes to finish):
+**Full Run**
+> **Caution:** It takes 40+ minutes to finish all experiments with 100 cores.
 ```bash
+cd ../
+python3 pararun.py --conf enp/run.conf --worker 100
+cd enp/
 python3 parse.py
+```
+**Quick Run**
+```bash
+cd ../
+python3 pararun.py --conf enp/quickrun.conf --worker 100
+cd enp/
+cp expected_fct_summary.fxt fct_summary.fxt
+```
+5. Plot
+```bash
 python3 plot.py
 ```
+You should expect to see `fig14_enp.pdf`, which should match the second subfigure in `../expected_fig14.pdf`.
 
 
 #### DB
-
-Figure 14, Figure 15, `experiments/nsdi26fall/eval_main/cluster_a/`, `detailed_ae/main/db/`
 
 1. Generate traffic files:
 ```bash
@@ -139,27 +150,40 @@ cd detailed_ae/main/db/
 mkdir cmfiles
 python3 generate_trafficfiles.py
 ```
-
-2. Untar path weight files: `./restore_pwfiles.sh`
-
-3. Run experiments (7G-338G 9:57am-4:46pm please be cautious about running this experiment with many cores. memories may explode. this takes about 40 minutes to complete on a 100-core machine, can skip):
+2. Untar path weight files: 
+```bash
+./restore_pwfiles.sh
+tar -xvJf pwfilesdir.tar.xz
+```
+3. Create a directory for output files:
 ```bash
 mkdir outfiles
-python3 pararun.py --conf db/run.conf --worker 30
 ```
+4. Run experiments and parse outputs:
 
-4. Plot
-If skipped the previous step of running experiments: `cp expected_fct_summary.fxt fct_summary.fxt`
-Or (this command `parse.py` would take a few minutes to finish):
+**Full Run**
+> **Caution:** It takes 7+ hours and 330+ GB of memory to finish all experiments with 30 cores.
 ```bash
+cd ../
+python3 pararun.py --conf db/run.conf --worker 30
+cd db/
 python3 parse.py
+```
+**Quick Run**
+```bash
+cd ../
+python3 pararun.py --conf db/quickrun.conf --worker 100
+cd db/
+cp expected_fct_summary.fxt fct_summary.fxt
+```
+5. Plot
+```bash
 python3 plot.py
 ```
+You should expect to see `fig14_db.pdf`, which should match the third subfigure in `../expected_fig14.pdf`.
 
 
 #### WS
-
-Figure 14, Figure 15, `experiments/nsdi26fall/eval_main/cluster_b/`, `detailed_ae/main/ws/`
 
 1. Generate traffic files:
 ```bash
@@ -167,27 +191,40 @@ cd detailed_ae/main/ws/
 mkdir cmfiles
 python3 generate_trafficfiles.py
 ```
-
-2. Untar path weight files: `./restore_pwfiles.sh`
-
-3. Run experiments (?G- ?am- please be cautious about running this experiment with many cores. memories may explode. this takes about 40 minutes to complete on a 100-core machine, can skip):
+2. Untar path weight files: 
+```bash
+./restore_pwfiles.sh
+tar -xvJf pwfilesdir.tar.xz
+```
+3. Create a directory for output files:
 ```bash
 mkdir outfiles
-python3 pararun.py --conf ws/run.conf --worker 30
 ```
+4. Run experiments and parse outputs:
 
-4. Plot
-If skipped the previous step of running experiments: `cp expected_fct_summary.fxt fct_summary.fxt`
-Or (this command `parse.py` would take a few minutes to finish):
+**Full Run**
+> **Caution:** It takes multiple hours and hundreds of GB of memory to finish all experiments. Please watch out when running.
 ```bash
+cd ../
+python3 pararun.py --conf ws/run.conf --worker 30
+cd ws/
 python3 parse.py
+```
+**Quick Run**
+```bash
+cd ../
+python3 pararun.py --conf ws/quickrun.conf --worker 100
+cd ws/
+cp expected_fct_summary.fxt fct_summary.fxt
+```
+5. Plot
+```bash
 python3 plot.py
 ```
+You should expect to see `fig14_ws.pdf`, which should match the fourth subfigure in `../expected_fig14.pdf`.
 
 
 #### HD
-
-Figure 14, Figure 15, `experiments/nsdi26fall/eval_main/cluster_c/`, `detailed_ae/main/hd/`
 
 1. Generate traffic files:
 ```bash
@@ -195,22 +232,37 @@ cd detailed_ae/main/hd/
 mkdir cmfiles
 python3 generate_trafficfiles.py
 ```
-
-2. Untar path weight files: `./restore_pwfiles.sh`
-
-3. Run experiments (?G- ?am- please be cautious about running this experiment with many cores. memories may explode. this takes about 40 minutes to complete on a 100-core machine, can skip):
+2. Untar path weight files: 
+```bash
+./restore_pwfiles.sh
+tar -xvJf pwfilesdir.tar.xz
+```
+3. Create a directory for output files:
 ```bash
 mkdir outfiles
-python3 pararun.py --conf hd/run.conf --worker 30
 ```
+4. Run experiments and parse outputs:
 
-4. Plot
-If skipped the previous step of running experiments: `cp expected_fct_summary.fxt fct_summary.fxt`
-Or (this command `parse.py` would take a few minutes to finish):
+**Full Run**
+> **Caution:** It takes multiple hours and hundreds of GB of memory to finish all experiments. Please watch out when running.
 ```bash
+cd ../
+python3 pararun.py --conf hd/run.conf --worker 30
+cd hd/
 python3 parse.py
+```
+**Quick Run**
+```bash
+cd ../
+python3 pararun.py --conf hd/quickrun.conf --worker 100
+cd hd/
+cp expected_fct_summary.fxt fct_summary.fxt
+```
+5. Plot
+```bash
 python3 plot.py
 ```
+You should expect to see `fig14_hd.pdf`, which should match the last subfigure in `../expected_fig14.pdf`.
 
 
 ### CDF
