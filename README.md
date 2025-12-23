@@ -86,7 +86,7 @@ mkdir outfiles
 cd ../
 python3 pararun.py --conf unv/run.conf --worker 100
 cd unv/
-python3 parse.py
+python3 parse.py # Note that this command may take a few minutes to run.
 ```
 **Quick Run**
 ```bash
@@ -126,7 +126,7 @@ mkdir outfiles
 cd ../
 python3 pararun.py --conf enp/run.conf --worker 100
 cd enp/
-python3 parse.py
+python3 parse.py # Note that this command may take a few minutes to run
 ```
 **Quick Run**
 ```bash
@@ -167,7 +167,7 @@ mkdir outfiles
 cd ../
 python3 pararun.py --conf db/run.conf --worker 30
 cd db/
-python3 parse.py
+python3 parse.py # Note that this command may take a few minutes to run
 ```
 **Quick Run**
 ```bash
@@ -208,7 +208,7 @@ mkdir outfiles
 cd ../
 python3 pararun.py --conf ws/run.conf --worker 30
 cd ws/
-python3 parse.py
+python3 parse.py # Note that this command may take a few minutes to run
 ```
 **Quick Run**
 ```bash
@@ -249,7 +249,7 @@ mkdir outfiles
 cd ../
 python3 pararun.py --conf hd/run.conf --worker 30
 cd hd/
-python3 parse.py
+python3 parse.py # Note that this command may take a few minutes to run
 ```
 **Quick Run**
 ```bash
@@ -267,112 +267,130 @@ You should expect to see `fig14_hd.pdf`, which should match the last subfigure i
 
 ### CDF
 
-We make use of the data generated in the Main section. do not generate new data here.
-`python3 plot.py`
-or if not run before:
+Claim: Starfish performs well across all percentiles. Note that the current caption of Figure 15 on paper is outdated; we will fix it in the revised paper.
+
+Success metric: Generate `fig15.pdf` and it should match `expected_fig15.pdf`.
+
+In this subsection, we do not generate new output files. If you have done Full Run in [Main](#main) UNV & ENP, plot with the following command:
 ```bash
-tar -xvJf outfilesdir.tar.xz
+python3 plot.py
+```
+Else if you have used Quick Run in [Main](#main) UNV & ENP, proceed with the following commands:
+```bash
+tar -xvJf outfilesdir.tar.xz # Untar the output files
 python3 plot2.py
 ```
+You should expect to see `fig15.pdf`, which should match `expected_fig15.pdf`.
 
 
 ### Failure
 
+Claim: Starfish is resilient to random link failures, outperforming leaf-spine and approaching failure-aware performance.
+
+Success metric: We have one subsection for each of the two traffic traces. In each of the subsection, generate `fig16_xx.pdf` and it should match the corresponding subfigure in `expected_fig16.pdf`.
+
+
 #### UNV
 
-Figure 16, `experiments/nsdi26fall/eval_failure_link/unv1/`, `detailed_ae/failure/unv/`
-
-1. Do not generate new traffic files; reuse the ones in Main
-2. Untar path weight files:
+1. Untar path weight files:
 ```bash
 cd detailed_ae/failure/unv/
 tar -xvJf pwfilesdir.tar.xz
 ```
-3. Run experiments
-dringsu2, dringsu2after, leafspine
-3:55pm-4:00pm
+2. Run experiments:
 ```bash
 mkdir outfiles
-python3 pararun.py --conf unv/run.conf --worker 50
+cd ../
+python3 pararun.py --conf unv/run.conf --worker 50 # It takes a few minutes to run this command.
 ```
-4. Parse & plot
-either `cp expected_fct_summary.txt fct_summary.txt`
-or
+3. Parse output files & plot:
 ```bash
 python3 parse.py
 python3 plot.py
 ```
+You should expect to see `fig16_unv.pdf`, which should match the first subfigure in `../expected_fig16.pdf`.
 
 
 #### ENP
 
-Figure 16, `experiments/nsdi26fall/eval_failure_link/prv1/`, `detailed_ae/failure/enp/`
-
-1. Do not generate new traffic files; reuse the ones in Main
-2. Untar path weight files:
+1. Untar path weight files:
 ```bash
 cd detailed_ae/failure/enp/
 tar -xvJf pwfilesdir.tar.xz
 ```
-3. Run experiments
-dringsu2, dringsu2after, leafspine
-4:58pm-5:02pm
-The occasional assertion failed should be fine; they are associated with the loggers
+2. Run experiments:
 ```bash
 mkdir outfiles
-python3 pararun.py --conf enp/run.conf --worker 100
+cd ../
+python3 pararun.py --conf enp/run.conf --worker 50 # It takes a few minutes to run this command. The occasional assertion failed is fine.
 ```
-4. Parse & plot
-either `cp expected_fct_summary.txt fct_summary.txt`
-or
+3. Parse output files & plot:
 ```bash
 python3 parse.py
 python3 plot.py
 ```
+You should expect to see `fig16_enp.pdf`, which should match the second subfigure in `../expected_fig16.pdf`.
 
 
 ### Scale
 
-Figure 17a, `experiments/nsdi26fall/eval_scale_larger_supernode/`, `detailed_ae/scale/`, constant ring size
-Figure 17b, `experiments/nsdi26fall/eval_scale_larger_ring/`, `detailed_ae/scale/`, constant supernode size
+Claim: Starfish performs well at small scale, when we keep the ring size constant when adding switches (Figure 17a). However, Starfish’s performance deteriorates at larger scale when the ring size has to increase to accommodate even more switches (Figure 17b).
 
-1. Generate traffic files (needed here because topology size is changing)
+Success metric: Generate `fig17a.pdf` and `fig17b.pdf`, and they should match `expected_fig17a.pdf` and `expected_fig17b.pdf` respectively.
+
+1. Prepare netpath files:
 ```bash
 cd detailed_ae/evalscalenetpathfiles/
 tar -xvJf twolargedringnetpath.tar.xz
-cd detailed_ae/scale/
+```
+2. Generate traffic files:
+```bash
+cd ../scale/
 mkdir cmfiles
 python3 generate_trafficfiles.py
 ```
-2. Untar path weight files: `tar -xvJf pwfilesdir.tar.xz`
-3. Run experiments
-8 minutes
+3. Prepare path weight files: 
+```bash
+tar -xvJf pwfilesdir.tar.xz
+```
+4. Run experiments:
 ```bash
 mkdir outfiles
-python3 pararun.py --conf run.conf --worker 100
+python3 pararun.py --conf run.conf --worker 100 # It takes about 10 minutes to run this commnd.
 ```
-4. Parse & plot
-`cp expected_fct_summary.txt fct_summary.txt`
-or
-`python3 parse.py`
-`python3 plot.py`
+5. Parse output files & plot:
+```bash
+python3 parse.py
+python3 plot.py
+```
+You should expect to see `fig17a.pdf` and `fig17b.pdf`, which should match `expected_fig17a.pdf` and `expected_fig17b.pdf` respectively.
 
 
 ### Bottleneck
 
-Figure 18, `experiments/nsdi26fall/eval_bottleneck_oversub/`, `detailed_ae/bottleneck/`
+Claim: Starfish’s performance gains are more pronounced with higher rack oversubscription and hence higher rack congestion.
 
-1. Generate traffic files: we do not generate new traffic files
+Success metric: Generate `fig18.pdf` and it should match `expected_fig18.pdf`.
 
-2. Untar path weight files: we do not untar new path weight files
+1. Run experiments and parse outputs:
 
-3. Run experiments (~31 minutes)
+**Full Run**
+> **Caution:** It takes 35+ minutes to finish all experiments with 100 cores.
 ```bash
+cd detailed_ae/bottleneck/
 mkdir outfiles
 python3 pararun.py --conf run.conf --worker 100
+python3 parse.py
 ```
-4. Parse & plot
-`cp expected_fct_summary.txt fct_summary.txt`
-or
-`python3 parse.py`
-`python3 plot.py`
+**Quick Run**
+```bash
+cd detailed_ae/bottleneck/
+mkdir outfiles
+python3 pararun.py --conf quickrun.conf --worker 100
+cp expected_fct_summary.txt fct_summary.txt
+```
+2. Plot:
+```bash
+python3 plot.py
+```
+You should expect to see `fig18.pdf`, which should match `expected_fig18.pdf`.
