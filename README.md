@@ -1,18 +1,30 @@
 # Starfish: A Topology-Routing Co-Design for Small-Scale Data Centers
 
-This repository contains the source code and instructions for artifact evaluation for our NSDI'26 paper Starfish: A Topology-Routing Co-Design for Small-Scale Data Centers. 
+This repository contains the source code and instructions for artifact evaluation for our NSDI'26 paper Starfish: A Topology-Routing Co-Design for Small-Scale Data Centers. The following codes are run with `g++ 11.4.0` and `Python 3.10.12`.
 
 We are submitting this artifact for all three badges: Artifact Available, Artifact Functional, and Results Reproduced.
 
 
 ## Getting Started Instructions
 
-Make the executables:
-set `BASEDIR` in datacentre Makefile
+1. Run the following command to install dependencies:
+```bash
+pip3 install -r requirements.txt
+```
+2. Make sure that line 4 `BASEDIR=/path/to/your/dir/Starfish/src/emp` in `Starfish/src/emp/datacentre/Makefile` is set properly to the actual path. Be careful that we are changing the `Makefile` under `src/emp/datacentre/`, but _not_ the one under `src/emp/`.
+3. Run the following commands to make the executable:
 ```bash
 cd src/emp/ && make clean && make
-cd datacentre/ && make clean && make
+cd datacentre/
+make clean
+make
 ```
+4. Run the following command to run a test experiment:
+```bash
+cd ../../../getting_started/
+python3 pararun.py --conf run.conf --worker 1
+```
+5. Expect the experiment to finish quickly and also expect an `outfile.out`. The content should match the content in `expected_outfile.out`.
 
 
 ## Detailed Instructions

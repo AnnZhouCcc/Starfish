@@ -1,0 +1,23 @@
+stime = 100
+Using seed: 1
+connection matrix file: trafficfile.cm
+topology_type = 2
+numswitches = 80
+numhosts = 2988
+os = 1
+ls_k = 64
+Netpath File: ../detailed_ae/evalnetpathfiles/netpath_dring_80_64_ecmp.np
+Pathweight File prefix: pathweightfile.pw
+numintervals = 1
+serverfile: ../detailed_ae/evalserverfiles/dring_2988_80_64.sv
+Topology File: ../detailed_ae/evaltopologyfiles/dring_80_64.edgelist
+Logging to logout.dat
+GraphFile: ../detailed_ae/evaltopologyfiles/dring_80_64.edgelist
+SVRPORTS: 39
+init_network finished. Link speed: 10737408000
+sw<=>svr bw: 894784 pkt/s
+RRG Init network finished 
+Starting to produce flow paths
+Set up all flows
+topology  2 0 0
+starting simulation 

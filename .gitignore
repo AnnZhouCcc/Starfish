@@ -9,7 +9,6 @@ detailed_ae/*/logout.dat
 detailed_ae/evalscalenetpathfiles/netpath_dring_140_96_su2.np
 detailed_ae/evalscalenetpathfiles/netpath_dring_160_96_su2.np
 
+getting_started/logout.dat
+
 .vscode/
-venv/
-venv_backup/
-gurobi*.tar.gz
