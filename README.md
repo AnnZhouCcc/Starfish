@@ -29,29 +29,39 @@ python3 pararun.py --conf run.conf --worker 1
 
 ## Detailed Instructions
 
-### General setup
+We provide instructions for the five major experiments that showcase the key results and major claims of our work. The table below summarizes the five experiments -- which figures they refer to, which directories contain the codes and which subsections describe the experiment details.
 
-Make the executables:
-```bash
-cd src/emp/ && make clean && make
-cd datacentre/ && make clean && make
-```
+| Figure     | Directory   | Subsection                |
+| ---------- | ----------- | ------------------------- |
+| Figures 14 | main/       | [Main](#main)             |
+| Figure 15  | cdf/        | [CDF](#cdf)               |
+| Figure 16  | failure/    | [Failure](#failure)       |
+| Figure 17  | scale/      | [Scale](#scale)           |
+| Figures 18 | bottleneck/ | [Bottleneck](#bottleneck) |
 
-Set up files to be used later:
+Setting up:
+1. Make sure that you have completed all steps in [Getting Started Instructions](#getting-started-instructions).
+2. Run the following commands to prepare the files that will be used later:
 ```bash
-cd evalnetpathfiles
+cd detailed_ae/evalnetpathfiles/
 tar -xvJf netpath_fhi_dring.tar.xz
 mv netpath_fhi_dring.txt netpath_dring_80_64_fhi.np
 
+cd ../
 tar -xvJf rawtrafficfiles.tar.xz
 ```
+
+Quick run: In some cases, one run of the experiment runs for a couple hours and takes up 10+GB of memory, and one experiment could contain up to 500 runs with different configurations. A single run of the experiment can only be run on one core and parallism only happens across multiple runs. As such, we will also provide `Quick Run` option for some experiments, where it runs a shorter version of the experiments to make sure experiments are functional and continues the figure plotting with data files provided to make sure results are correct.
 
 
 ### Main
 
-#### UNV
+Claim: Starfish delivers lower tail latency at comparable load and higher load at comparable tail latency,  outperforming baselines in the network load v.s. tail latency tradeoff across most traffic traces.
 
-Figure 14, Figure 15, `experiments/nsdi26fall/eval_main/unv1/`, `detailed_ae/main/unv/`
+Success metric: We have one subsection for each of the five traffic traces. In each of the subsection, generate `fig14_xx.pdf` and it should match the corresponding subfigure in `expected_fig14.pdf`.
+
+
+#### UNV
 
 1. Generate traffic files:
 ```bash
@@ -59,22 +69,36 @@ cd detailed_ae/main/unv/
 mkdir cmfiles
 python3 generate_trafficfiles.py
 ```
-
-2. Untar path weight files: `tar -xvJf pwfilesdir.tar.xz`
-
-3. Run experiments (this takes about 45 minutes to complete on a 100-core machine, can skip; best if run, cdf uses raw data):
+2. Untar path weight files: 
+```bash
+tar -xvJf pwfilesdir.tar.xz
+```
+3. Create a directory for output files:
 ```bash
 mkdir outfiles
-python3 pararun.py --conf unv/run.conf --worker 100
 ```
+4. Run experiments and parse outputs:
 
-4. Plot
-If skipped the previous step of running experiments: `cp expected_fct_summary.fxt fct_summary.fxt`
-Or (this command `parse.py` would take a few minutes to finish):
+**Full Run**
+> **Caution:** It takes ~45 minutes to finish all experiments with 100 cores.
 ```bash
+cd ../
+python3 pararun.py --conf unv/run.conf --worker 100
+cd unv/
 python3 parse.py
+```
+**Quick Run**
+```bash
+cd ../
+python3 pararun.py --conf unv/quickrun.conf --worker 100
+cd unv/
+cp expected_fct_summary.fxt fct_summary.fxt
+```
+4. Plot:
+```bash
 python3 plot.py
 ```
+You should expect to see `fig14_unv.pdf`, which should match the first subfigure in `../expected_fig14.pdf`.
 
 
 #### ENP
